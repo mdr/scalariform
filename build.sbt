@@ -10,8 +10,8 @@ lazy val commonSettings = inConfig(Test)(Defaults.testSettings) ++
     sonatypeProfileName := organization.value,
     scalaVersion := crossScalaVersions.value.head,
     crossScalaVersions := Seq(
-      "2.13.0",
-      "2.12.8",
+      "2.13.14",
+      "2.12.19",
       "2.11.12",
       "2.10.7"
     ),
@@ -77,9 +77,10 @@ def subprojectSettings(projectName: String) = commonSettings ++ Seq(
 def scala2_11Dependencies = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, major)) if major >= 11 =>
-      val parserV = if (major == 11) "1.1.1" else "1.1.2" // cf https://github.com/scala/scala-parser-combinators/issues/197
+      val xmlV = if (major == 11) "1.3.1" else "2.3.0"
+      val parserV = if (major == 11) "1.1.1" else "2.4.0" // cf https://github.com/scala/scala-parser-combinators/issues/197
       Seq(
-        "org.scala-lang.modules" %% "scala-xml"                % "1.2.0",
+        "org.scala-lang.modules" %% "scala-xml"                % xmlV,
         "org.scala-lang.modules" %% "scala-parser-combinators" % parserV
       )
     case _ => Nil
